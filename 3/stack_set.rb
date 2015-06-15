@@ -23,6 +23,19 @@ class StackSet
     node
   end
 
+  def pop_at(index)
+    stack = stacks[index]
+    if stack
+      node = stack.pop
+      @current_stack_index = index
+      if stack.empty?
+        @stacks.delete_at current_stack_index
+        @current_stack_index = stacks.size - 1
+      end
+      node
+    end
+  end
+
   def push(item)
     stack = current_stack
     if stack.nil?

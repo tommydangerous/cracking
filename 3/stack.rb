@@ -3,12 +3,16 @@ require_relative "node"
 class Stack
   attr_accessor :first
 
-  def initialize(node)
-    set_first node
+  def initialize(node = nil)
+    if node
+      set_first node
+    end
   end
 
   def first=(node)
-    set_first node
+    if first.nil?
+      set_first node
+    end
   end
 
   def empty?
@@ -16,7 +20,7 @@ class Stack
   end
 
   def min
-    @minimum_value
+    @minimum_value.to_f
   end
 
   def nodes
@@ -27,6 +31,10 @@ class Stack
       node = node.next_node
     end
     array
+  end
+
+  def peek
+    @last
   end
 
   def pop
@@ -45,12 +53,16 @@ class Stack
   end
 
   def push(node)
-    if node.data < @minimum_value
-      @minimum_value = node.data
+    if first.nil?
+      set_first node
+    else
+      if node.data < @minimum_value
+        @minimum_value = node.data
+      end
+      @last.next_node    = node
+      node.previous_node = @last
+      @last              = node
     end
-    @last.next_node    = node
-    node.previous_node = @last
-    @last              = node
   end
 
   def print
@@ -71,10 +83,8 @@ class Stack
   end
 
   def set_first(node)
-    if first.nil?
-      @first = node
-      @last  = first
-      @minimum_value = first.data
-    end
+    @first = node
+    @last  = first
+    @minimum_value = first.data
   end
 end

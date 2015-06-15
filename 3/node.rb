@@ -11,5 +11,7 @@ class Node
   def delete
     previous_node.next_node = next_node if previous_node
     next_node.previous_node = previous_node if next_node
+    @next_node     = nil
+    @previous_node = nil
   end
 end
